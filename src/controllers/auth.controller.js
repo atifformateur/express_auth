@@ -28,7 +28,8 @@ export async function registerController (req, res) {
         //la response
         res.status(201).json({
             success: true,
-            message:"user créé"
+            message:"user créé",
+            data: result.insertId
         })
     } catch (error) {
         console.error('erreur lors de la creation du compte', error);
@@ -70,6 +71,7 @@ export async function loginController (req, res, next) {
 }
 
 export async function profileController(req, res) {
+    console.log('test profile controller');
     console.log(req.user);
-    
+    res.json({user: req.user});
 }

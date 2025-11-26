@@ -6,30 +6,20 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../db/index.js';
 //mes variable d'environnements
 import { env } from '../config/env.js';
+//import des services
+import { register } from '../services/auth.service.js';
 
 
-export async function registerController (req, res) {
+export async function registerController (req, res, next) {
     try {
-        //recuperer email et password depuis le body de la request http
-        const {email, password} = req.body;
-        // validation basique (si les champs sont présent)
-        if(!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "email et mdp obligatoire",
-                data: null
-            })
-        }
-        //hash du mdp
-        const hash = await bcrypt.hash(password, 10);        
-        //enregistrer l'utilisateur dans la db
-        const query = `INSERT INTO users (email, password_hash) VALUES (?,?)`;
-        const [result] = await pool.execute(query, [email, hash]);
+       
+        //appeler ma funciton qui contient ma logique de register
+        const user = await register(req.body)
         //la response
         res.status(201).json({
             success: true,
             message:"user créé",
-            data: result.insertId
+            data: user
         })
     } catch (error) {
         console.error('erreur lors de la creation du compte', error);
@@ -58,7 +48,7 @@ export async function loginController (req, res, next) {
         }
         //on genere un token avec jwt
         const token = jwt.sign(
-            {sub: user.id, email: user.email}, //payload (dans mini du token)
+            {sub: user.id, email: user.email}, //payload (info minimum du token)
             env.jwtSecret, //clé secret de mon .env que je recupere via mon fichier env.js
             { expiresIn: '1h'} //durée de validité du token
         )
@@ -70,8 +60,8 @@ export async function loginController (req, res, next) {
     }
 }
 
+//controller profile
 export async function profileController(req, res) {
-    console.log('test profile controller');
     console.log(req.user);
     res.json({user: req.user});
 }

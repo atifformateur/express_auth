@@ -9,7 +9,6 @@ import { env } from '../config/env.js';
 //import des services
 import { register } from '../services/auth.service.js';
 
-
 export async function registerController (req, res, next) {
     try {
        

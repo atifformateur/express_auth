@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import authRoutes from './routes/auth.routes.js'
+import authRoutes from './routes/auth.routes.js';
+import demoRoutes from './routes/demo.routes.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/test', (req, res)=>{
 
 //route parent pour l'auth
 app.use('/api/auth', authRoutes);
+app.use('/api/demo', demoRoutes);
 
 //middleware qui gere les erreurs, capture tout type d'erreur et renvoi une response
 app.use((err, req, res, next)=>{

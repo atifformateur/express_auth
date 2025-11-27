@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../db/index.js';
 import { env } from '../config/env.js';
 
-
-
 export async function register({email, password}) {
     // validation basique (si les champs sont présent)
     if(!email || !password) {

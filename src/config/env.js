@@ -21,6 +21,8 @@ export const env = {
         password: process.env.DB_PASSWORD ?? '',
         database: process.env.DB_NAME
     },
-    jwtSecret: process.env.JWT_SECRET
+    jwtSecret: process.env.JWT_SECRET,
+    geminiApiKey: process.env.GEMINI_API_KEY
+
 }
 

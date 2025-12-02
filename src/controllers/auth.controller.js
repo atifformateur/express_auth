@@ -8,6 +8,8 @@ import { pool } from '../db/index.js';
 import { env } from '../config/env.js';
 //import des services
 import { register } from '../services/auth.service.js';
+//import de mon service gemini et de ses fonctions
+import { test } from '../services/gemini.service.js';
 
 export async function registerController (req, res, next) {
     try {
@@ -62,6 +64,12 @@ export async function loginController (req, res, next) {
 
 //controller profile
 export async function profileController(req, res) {
-    console.log(req.user);
-    res.json({user: req.user});
+
+    //afficher le log de mon api key de mon service gemini service 
+    test();
+
+    res.json({
+        user: req.user
+    });
+    
 }

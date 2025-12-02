@@ -17,7 +17,7 @@ export async function authenticate(req, res, next) {
         //verification du token avec verify
         const payload = jwt.verify(token, env.jwtSecret);
         //recuperer le user
-        const [rows] = await pool.execute('SELECT id, email, created_at, pass FROM users WHERE id = ?', [ payload.sub]);
+        const [rows] = await pool.execute('SELECT id, email, created_at, birth_date, birth_place FROM users WHERE id = ?', [ payload.sub]);
         if(!rows[0]){
             return res.status(401).json({error: 'user inexistant'});
         }
